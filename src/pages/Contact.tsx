@@ -31,8 +31,10 @@ const Contact = () => {
     }
     setLoading(true);
     try {
-      const { error } = await supabase.from('contact_submissions').insert([parsed.data]);
-      if (error) throw error;
+      const { name, email, subject, message, phone } = parsed.data;
+      const { error } = await supabase.from('contact_submissions').insert([{
+        name, email, subject, message, phone: phone || null
+      }]);
       toast({ title: t('contact.success') });
       setForm({ name: '', email: '', phone: '', subject: '', message: '' });
     } catch {
