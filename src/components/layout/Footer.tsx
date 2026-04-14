@@ -28,7 +28,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center">
-                <span className="text-accent-foreground font-bold text-lg">G</span>
+                <span className="text-accent-foreground font-bold text-lg">R</span>
               </div>
               <span className="font-bold text-lg">{t('footer.company')}</span>
             </div>
