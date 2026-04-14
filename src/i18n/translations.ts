@@ -18,11 +18,11 @@ export const translations = {
     // Company Intro
     'intro.label': 'Who We Are',
     'intro.title': 'Excellence in Glass Manufacturing',
-    'intro.desc': 'With decades of experience in the Saudi glass industry, we deliver world-class glass solutions for residential, commercial, and industrial projects. Our state-of-the-art factory combines cutting-edge technology with skilled craftsmanship.',
-    'intro.experience': 'Years of Experience',
+    'intro.desc': 'With decades of experience in the Saudi glass industry, we deliver world-class glass solutions for residential, commercial, and industrial projects. Our state-of-the-art factories combine cutting-edge technology with skilled craftsmanship.',
+    'intro.factories': 'Factories',
     'intro.projects_completed': 'Projects Completed',
     'intro.clients': 'Happy Clients',
-    'intro.products_count': 'Product Types',
+    'intro.team_members': 'Team Members',
 
     // Services
     'services.label': 'What We Do',
@@ -100,7 +100,7 @@ export const translations = {
     'contact.address': 'Address',
     'contact.address_value': 'Industrial Area, Riyadh, Saudi Arabia',
     'contact.phone_value': '+966 11 XXX XXXX',
-    'contact.email_value': 'info@saudiglass.com',
+    'contact.email_value': 'info@rwaqglass.com',
     'contact.hours': 'Working Hours',
     'contact.hours_value': 'Sun - Thu: 8:00 AM - 5:00 PM',
 
@@ -110,7 +110,7 @@ export const translations = {
     'footer.services': 'Services',
     'footer.contact': 'Contact Info',
     'footer.rights': 'All rights reserved.',
-    'footer.company': 'Saudi Glass Co.',
+    'footer.company': 'Rwaq Glass',
   },
   ar: {
     // Nav
@@ -131,11 +131,11 @@ export const translations = {
     // Company Intro
     'intro.label': 'من نحن',
     'intro.title': 'التميز في صناعة الزجاج',
-    'intro.desc': 'بعقود من الخبرة في صناعة الزجاج السعودية، نقدم حلول زجاجية عالمية المستوى للمشاريع السكنية والتجارية والصناعية. يجمع مصنعنا الحديث بين التكنولوجيا المتطورة والحرفية الماهرة.',
-    'intro.experience': 'سنوات من الخبرة',
+    'intro.desc': 'بعقود من الخبرة في صناعة الزجاج السعودية، نقدم حلول زجاجية عالمية المستوى للمشاريع السكنية والتجارية والصناعية. تجمع مصانعنا الحديثة بين التكنولوجيا المتطورة والحرفية الماهرة.',
+    'intro.factories': 'مصانع',
     'intro.projects_completed': 'مشروع مكتمل',
     'intro.clients': 'عميل سعيد',
-    'intro.products_count': 'نوع منتج',
+    'intro.team_members': 'أعضاء الفريق',
 
     // Services
     'services.label': 'ماذا نقدم',
@@ -213,7 +213,7 @@ export const translations = {
     'contact.address': 'العنوان',
     'contact.address_value': 'المنطقة الصناعية، الرياض، المملكة العربية السعودية',
     'contact.phone_value': '+966 11 XXX XXXX',
-    'contact.email_value': 'info@saudiglass.com',
+    'contact.email_value': 'info@rwaqglass.com',
     'contact.hours': 'ساعات العمل',
     'contact.hours_value': 'الأحد - الخميس: 8:00 ص - 5:00 م',
 
@@ -223,7 +223,7 @@ export const translations = {
     'footer.services': 'الخدمات',
     'footer.contact': 'معلومات الاتصال',
     'footer.rights': 'جميع الحقوق محفوظة.',
-    'footer.company': 'شركة الزجاج السعودية',
+    'footer.company': 'رواق للزجاج',
   },
 } as const;
 

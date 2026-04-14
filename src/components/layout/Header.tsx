@@ -39,7 +39,7 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">G</span>
+              <span className="text-primary-foreground font-bold text-lg">R</span>
             </div>
             <span className="font-bold text-lg text-foreground hidden sm:block">
               {t('footer.company')}
