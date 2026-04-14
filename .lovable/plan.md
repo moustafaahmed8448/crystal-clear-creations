@@ -1,69 +1,34 @@
 
-# Glass Manufacturing Company Website
 
-## Overview
-A premium bilingual (Arabic/English) website for a Saudi glass manufacturing company, featuring glass-inspired UI (transparency, blur, reflections) with a neutral color palette of grays, whites, soft blues, and high-contrast accents.
+# Changes Required
 
-## Design System
-- **Colors**: Neutral transparent tones — soft grays, whites, ice blues, with sharp accent highlights (e.g., deep charcoal or steel blue for CTAs)
-- **Fonts**: Cairo/Tajawal for Arabic, Poppins/Inter for English
-- **RTL**: Full layout flipping for Arabic — menus, sliders, icons, text alignment
-- **UI style**: Glassmorphism — frosted glass cards, subtle blur backgrounds, transparency layers, light reflections
-- **Language switcher**: Toggle between AR/EN with full RTL/LTR support
+## 1. Rename company to "Rwaq Glass" / "رواق للزجاج"
+- Update `translations.ts`: Change `footer.company` to "Rwaq Glass" (EN) and "رواق للزجاج" (AR)
+- Update all related text (footer.desc, contact email, etc.)
+- Update Header logo letter from "G" to "R"
 
-## Pages
+## 2. Animated counting stats (0 → target)
+- Update stats values: 3 factories, 1500 projects, 2839+ clients, 500+ team members
+- Add a new translation key `intro.team_members` for "Team Members" / "أعضاء الفريق"
+- Create a `useCountUp` hook using `useEffect` + `requestAnimationFrame` + Intersection Observer (only animate when visible)
+- Replace static stat values with animated counters
 
-### 1. Home Page
-- Hero slider with glass factory/project visuals and glassmorphic overlay text
-- Company introduction section
-- Services overview (4 cards with glass-effect hover)
-- Featured projects gallery
-- Call-to-action banner
-- Client/partner logos carousel
-- Testimonials slider
+## 3. Scroll-to-top on page navigation
+- Add a `ScrollToTop` component in `App.tsx` that calls `window.scrollTo(0, 0)` on route change using `useLocation`
 
-### 2. About Us
-- Company story timeline
-- Vision & mission with glass-themed icons
-- Factory capabilities showcase
-- Certifications grid
+## 4. Testimonials: show multiple cards with sliding
+- Replace the single-card testimonial with a grid/row showing 3 cards at once on desktop (1 on mobile)
+- Add auto-sliding and manual navigation arrows
+- Add more testimonials for variety
 
-### 3. Services
-- Glass manufacturing, custom solutions, installation, maintenance
-- Each service as a detailed section with visuals
+## 5. Floating WhatsApp button
+- Add a fixed-position WhatsApp icon (bottom-right for LTR, bottom-left for RTL) that links to `https://wa.me/<phone_number>`
+- Green circular button with WhatsApp icon, hover scale effect
 
-### 4. Projects / Portfolio
-- Filterable grid (residential, commercial, industrial)
-- Project detail pages with image gallery and specs
+## Files to modify
+- `src/i18n/translations.ts` — company name, new team key
+- `src/pages/Index.tsx` — stats data, count-up animation, testimonials grid
+- `src/App.tsx` — ScrollToTop component
+- `src/components/layout/Header.tsx` — logo letter "R"
+- `src/components/layout/Layout.tsx` — add WhatsApp floating button
 
-### 5. Products
-- Product categories (tempered, laminated, etc.)
-- Product detail pages with specifications
-
-### 6. Blog
-- Article listing with thumbnails
-- Blog post detail page
-
-### 7. Contact Us
-- Contact form (validated, stores submissions in Supabase)
-- Embedded Google Maps (Saudi Arabia location)
-- Company info display
-
-## Shared Components
-- Sticky header with mega menu and language switcher
-- Elegant footer with sitemap and social links
-- Smooth scroll animations (intersection observer)
-- Lazy-loaded images with WebP support
-- Glass-effect UI elements throughout
-
-## Backend (Supabase)
-- Tables: projects, products, product_categories, services, blog_posts, testimonials, clients, contact_submissions
-- Public read access via RLS for content tables
-- Insert-only access for contact form submissions
-- Seed with demo content for all sections
-
-## Performance
-- Preload critical fonts (Cairo, Poppins)
-- Lazy loading for images
-- Minimal animations (CSS-based, no heavy JS libraries)
-- Optimized asset loading
