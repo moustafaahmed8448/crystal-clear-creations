@@ -2,7 +2,13 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowLeft, Factory, Layers, Wrench, Shield, ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { ScrollReveal, StaggerContainer, StaggerItem, ParallaxImage } from '@/components/animations/ScrollReveal';
+import { lazy, Suspense } from 'react';
+
+const GlassScene = lazy(() => import('@/components/3d/GlassScene'));
+const FloatingGlass = lazy(() => import('@/components/3d/FloatingGlass'));
 
 const heroSlides = [
   {
@@ -79,13 +85,11 @@ const Index = () => {
   const ChevPrev = isRTL ? ChevronRight : ChevronLeft;
   const ChevNext = isRTL ? ChevronLeft : ChevronRight;
 
-  // Hero auto-slide
   useEffect(() => {
     const timer = setInterval(() => setCurrentSlide((s) => (s + 1) % heroSlides.length), 5000);
     return () => clearInterval(timer);
   }, []);
 
-  // Stats intersection observer
   useEffect(() => {
     if (!statsRef.current) return;
     const observer = new IntersectionObserver(
@@ -96,7 +100,6 @@ const Index = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Testimonials auto-slide
   const totalPages = Math.ceil(testimonials.length / 3);
   useEffect(() => {
     const timer = setInterval(() => setTestimonialPage((p) => (p + 1) % totalPages), 6000);
@@ -122,8 +125,8 @@ const Index = () => {
   ];
 
   return (
-    <div>
-      {/* Hero */}
+    <div className="overflow-x-hidden">
+      {/* Hero with 3D */}
       <section className="relative h-screen overflow-hidden">
         {heroSlides.map((slide, i) => (
           <div
@@ -134,27 +137,58 @@ const Index = () => {
             <div className="absolute inset-0" style={{ background: slide.overlay }} />
           </div>
         ))}
+
+        {/* 3D Glass Objects */}
+        <Suspense fallback={null}>
+          <GlassScene />
+        </Suspense>
+
         <div className="relative z-10 h-full flex items-center">
           <div className="container mx-auto px-4">
-            <div className="max-w-2xl">
-              <div className="glass inline-block px-4 py-1.5 rounded-full mb-6">
+            <motion.div
+              className="max-w-2xl"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.25, 0.4, 0.25, 1] }}
+            >
+              <motion.div
+                className="glass inline-block px-4 py-1.5 rounded-full mb-6"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
                 <span className="text-sm font-medium text-white/90">🏭 {t('footer.company')}</span>
-              </div>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+              </motion.div>
+              <motion.h1
+                className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
                 {t('hero.title')}
-              </h1>
-              <p className="text-lg md:text-xl text-white/80 mb-8 leading-relaxed max-w-lg">
+              </motion.h1>
+              <motion.p
+                className="text-lg md:text-xl text-white/80 mb-8 leading-relaxed max-w-lg"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
                 {t('hero.subtitle')}
-              </p>
-              <div className="flex flex-wrap gap-4">
+              </motion.p>
+              <motion.div
+                className="flex flex-wrap gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
                 <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full px-8">
                   <Link to="/projects">{t('hero.cta')} <Arrow className="h-4 w-4" /></Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="border-white/30 text-white bg-transparent hover:bg-white hover:text-primary rounded-full px-8">
                   <Link to="/contact">{t('hero.secondary')}</Link>
                 </Button>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
@@ -169,48 +203,57 @@ const Index = () => {
       </section>
 
       {/* Stats bar */}
-      <section className="relative -mt-16 z-20" ref={statsRef}>
-        <div className="container mx-auto px-4">
-          <div className="glass-strong rounded-2xl p-8 grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((stat) => (
-              <StatItem
-                key={stat.key}
-                target={stat.target}
-                suffix={stat.suffix}
-                label={t(stat.key)}
-                isVisible={statsVisible}
-              />
-            ))}
+      <ScrollReveal direction="up" duration={0.8}>
+        <section className="relative -mt-16 z-20" ref={statsRef}>
+          <div className="container mx-auto px-4">
+            <div className="glass-strong rounded-2xl p-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+              {stats.map((stat) => (
+                <StatItem
+                  key={stat.key}
+                  target={stat.target}
+                  suffix={stat.suffix}
+                  label={t(stat.key)}
+                  isVisible={statsVisible}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
       {/* Company Intro */}
       <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <span className="text-accent text-sm font-semibold uppercase tracking-wider">{t('intro.label')}</span>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-2 mb-6">{t('intro.title')}</h2>
-              <p className="text-muted-foreground leading-relaxed mb-8">{t('intro.desc')}</p>
-              <Button asChild className="rounded-full px-6">
-                <Link to="/about">{t('nav.about')} <Arrow className="h-4 w-4" /></Link>
-              </Button>
-            </div>
-            <div className="relative">
-              <div className="rounded-2xl overflow-hidden shadow-2xl">
-                <img
+            <ScrollReveal direction={isRTL ? 'right' : 'left'}>
+              <div>
+                <span className="text-accent text-sm font-semibold uppercase tracking-wider">{t('intro.label')}</span>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-2 mb-6">{t('intro.title')}</h2>
+                <p className="text-muted-foreground leading-relaxed mb-8">{t('intro.desc')}</p>
+                <Button asChild className="rounded-full px-6">
+                  <Link to="/about">{t('nav.about')} <Arrow className="h-4 w-4" /></Link>
+                </Button>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal direction={isRTL ? 'left' : 'right'} delay={0.2}>
+              <div className="relative">
+                <ParallaxImage
                   src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=800&q=80"
                   alt="Glass factory"
-                  className="w-full h-80 object-cover"
-                  loading="lazy"
+                  className="rounded-2xl shadow-2xl h-80"
                 />
+                <motion.div
+                  className="absolute -bottom-6 -start-6 glass-strong rounded-xl p-6 max-w-[200px]"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                >
+                  <div className="text-3xl font-bold text-primary">3</div>
+                  <div className="text-sm text-muted-foreground">{t('intro.factories')}</div>
+                </motion.div>
               </div>
-              <div className="absolute -bottom-6 -start-6 glass-strong rounded-xl p-6 max-w-[200px]">
-                <div className="text-3xl font-bold text-primary">3</div>
-                <div className="text-sm text-muted-foreground">{t('intro.factories')}</div>
-              </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -218,80 +261,105 @@ const Index = () => {
       {/* Services */}
       <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <ScrollReveal className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-accent text-sm font-semibold uppercase tracking-wider">{t('services.label')}</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">{t('services.title')}</h2>
             <p className="text-muted-foreground">{t('services.subtitle')}</p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          </ScrollReveal>
+          <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" staggerDelay={0.15}>
             {services.map((service) => (
-              <div key={service.titleKey} className="glass-card p-8 text-center group cursor-pointer">
-                <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-6 group-hover:bg-accent/20 transition-colors">
-                  <service.icon className="h-8 w-8 text-accent" />
-                </div>
-                <h3 className="font-semibold text-lg mb-3 text-foreground">{t(service.titleKey)}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{t(service.descKey)}</p>
-              </div>
+              <StaggerItem key={service.titleKey}>
+                <motion.div
+                  className="glass-card p-8 text-center group cursor-pointer h-full"
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-6 group-hover:bg-accent/20 transition-colors">
+                    <service.icon className="h-8 w-8 text-accent" />
+                  </div>
+                  <h3 className="font-semibold text-lg mb-3 text-foreground">{t(service.titleKey)}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{t(service.descKey)}</p>
+                </motion.div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* Featured Projects */}
       <section className="py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <ScrollReveal className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-accent text-sm font-semibold uppercase tracking-wider">{t('projects.label')}</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">{t('projects.title')}</h2>
             <p className="text-muted-foreground">{t('projects.subtitle')}</p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          </ScrollReveal>
+          <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.1}>
             {featuredProjects.map((project) => (
-              <div key={project.title} className="group relative rounded-2xl overflow-hidden cursor-pointer">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <span className="text-accent text-xs font-semibold uppercase tracking-wider">{project.category}</span>
-                  <h3 className="text-white font-bold text-lg mt-1">{project.title}</h3>
-                </div>
-              </div>
+              <StaggerItem key={project.title}>
+                <motion.div
+                  className="group relative rounded-2xl overflow-hidden cursor-pointer"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <span className="text-accent text-xs font-semibold uppercase tracking-wider">{project.category}</span>
+                    <h3 className="text-white font-bold text-lg mt-1">{project.title}</h3>
+                  </div>
+                </motion.div>
+              </StaggerItem>
             ))}
-          </div>
-          <div className="text-center mt-12">
+          </StaggerContainer>
+          <ScrollReveal className="text-center mt-12">
             <Button asChild variant="outline" className="rounded-full px-8">
               <Link to="/projects">{t('projects.view_all')} <Arrow className="h-4 w-4" /></Link>
             </Button>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* CTA with 3D */}
       <section className="py-24 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground relative overflow-hidden">
+        <Suspense fallback={null}>
+          <FloatingGlass />
+        </Suspense>
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }} />
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">{t('cta.title')}</h2>
-          <p className="text-xl text-primary-foreground/80 mb-8 max-w-lg mx-auto">{t('cta.subtitle')}</p>
-          <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full px-10 text-lg">
-            <Link to="/contact">{t('cta.button')} <Arrow className="h-5 w-5" /></Link>
-          </Button>
+          <ScrollReveal>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">{t('cta.title')}</h2>
+            <p className="text-xl text-primary-foreground/80 mb-8 max-w-lg mx-auto">{t('cta.subtitle')}</p>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full px-10 text-lg">
+                <Link to="/contact">{t('cta.button')} <Arrow className="h-5 w-5" /></Link>
+              </Button>
+            </motion.div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Testimonials */}
       <section className="py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <ScrollReveal className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-accent text-sm font-semibold uppercase tracking-wider">{t('testimonials.label')}</span>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-2">{t('testimonials.title')}</h2>
-          </div>
+          </ScrollReveal>
           <div className="grid md:grid-cols-3 gap-6 mb-8">
             {visibleTestimonials.map((item, idx) => (
-              <div key={testimonialPage * 3 + idx} className="glass-card p-8 text-center animate-fade-in">
+              <motion.div
+                key={testimonialPage * 3 + idx}
+                className="glass-card p-8 text-center"
+                initial={{ opacity: 0, y: 30, rotateX: 10 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                transition={{ duration: 0.6, delay: idx * 0.15 }}
+              >
                 <Quote className="h-8 w-8 text-accent/30 mx-auto mb-4" />
                 <p className="text-foreground leading-relaxed mb-4">"{item.text}"</p>
                 <div className="flex justify-center gap-1 mb-3">
@@ -301,7 +369,7 @@ const Index = () => {
                 </div>
                 <div className="font-semibold text-foreground">{item.name}</div>
                 <div className="text-sm text-muted-foreground">{item.role}</div>
-              </div>
+              </motion.div>
             ))}
           </div>
           <div className="flex justify-center gap-4">
@@ -337,17 +405,23 @@ const Index = () => {
       {/* Client Logos */}
       <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <ScrollReveal className="text-center mb-12">
             <span className="text-accent text-sm font-semibold uppercase tracking-wider">{t('clients.label')}</span>
             <h2 className="text-2xl font-bold text-foreground mt-2">{t('clients.title')}</h2>
-          </div>
-          <div className="flex flex-wrap justify-center gap-8 items-center">
+          </ScrollReveal>
+          <StaggerContainer className="flex flex-wrap justify-center gap-8 items-center" staggerDelay={0.08}>
             {clientLogos.map((name) => (
-              <div key={name} className="glass-card px-8 py-4 text-muted-foreground font-semibold text-sm">
-                {name}
-              </div>
+              <StaggerItem key={name}>
+                <motion.div
+                  className="glass-card px-8 py-4 text-muted-foreground font-semibold text-sm"
+                  whileHover={{ scale: 1.08, y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {name}
+                </motion.div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
     </div>
