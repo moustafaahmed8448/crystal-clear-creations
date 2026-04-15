@@ -73,11 +73,9 @@ const Scene = () => {
       <directionalLight position={[5, 5, 5]} intensity={1} />
       <pointLight position={[-5, 3, -5]} intensity={0.5} color="#88ccff" />
 
-      <GlassCube position={[2.5, 0, 0]} scale={1.2} rotationSpeed={1} />
-      <GlassCube position={[-1.5, 1, -2]} scale={0.7} rotationSpeed={1.5} />
-      <GlassCube position={[0.5, -0.5, -1]} scale={0.5} rotationSpeed={0.8} />
-      <GlassSphere position={[-2.5, -0.3, 1]} scale={0.8} />
-      <GlassSphere position={[1, 1.5, -3]} scale={0.5} />
+      <GlassCube position={[2.5, 0.2, 0]} scale={1.2} rotationSpeed={1} />
+      <GlassCube position={[-2, 0.8, -1.5]} scale={0.8} rotationSpeed={1.5} />
+      <GlassCube position={[0.3, -0.5, -1]} scale={0.6} rotationSpeed={0.8} />
 
       <Environment preset="city" />
     </>

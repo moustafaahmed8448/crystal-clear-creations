@@ -160,7 +160,7 @@ const Index = () => {
                 <span className="text-sm font-medium text-white/90">🏭 {t('footer.company')}</span>
               </motion.div>
               <motion.h1
-                className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
+                className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)]"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -168,7 +168,7 @@ const Index = () => {
                 {t('hero.title')}
               </motion.h1>
               <motion.p
-                className="text-lg md:text-xl text-white/80 mb-8 leading-relaxed max-w-lg"
+                className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed max-w-lg drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
