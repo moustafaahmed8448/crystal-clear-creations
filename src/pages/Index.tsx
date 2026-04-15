@@ -13,15 +13,15 @@ const FloatingGlass = lazy(() => import('@/components/3d/FloatingGlass'));
 const heroSlides = [
   {
     image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80',
-    overlay: 'linear-gradient(135deg, rgba(15,25,45,0.7), rgba(30,60,90,0.4))',
+    overlay: 'linear-gradient(135deg, rgba(10,18,35,0.85), rgba(20,45,70,0.6))',
   },
   {
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80',
-    overlay: 'linear-gradient(135deg, rgba(10,20,40,0.7), rgba(20,50,80,0.4))',
+    overlay: 'linear-gradient(135deg, rgba(8,15,30,0.85), rgba(15,40,65,0.6))',
   },
   {
     image: 'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=1920&q=80',
-    overlay: 'linear-gradient(135deg, rgba(15,25,45,0.7), rgba(30,60,90,0.4))',
+    overlay: 'linear-gradient(135deg, rgba(10,18,35,0.85), rgba(20,45,70,0.6))',
   },
 ];
 
