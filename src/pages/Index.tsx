@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowLeft, Factory, Layers, Wrench, Shield, ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { projects as allProjects } from '@/data/projects';
 
 const heroSlides = [
   {
@@ -14,7 +15,7 @@ const heroSlides = [
     overlay: 'linear-gradient(135deg, rgba(10,20,40,0.7), rgba(20,50,80,0.4))',
   },
   {
-    image: 'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=1920&q=80',
+    image: 'https://images.unsplash.com/photo-1577415124269-fc1140a69e91?w=1920&q=80',
     overlay: 'linear-gradient(135deg, rgba(15,25,45,0.7), rgba(30,60,90,0.4))',
   },
 ];
@@ -112,14 +113,7 @@ const Index = () => {
     { icon: Shield, titleKey: 'services.maintenance.title' as const, descKey: 'services.maintenance.desc' as const },
   ];
 
-  const featuredProjects = [
-    { title: 'Riyadh Tower', category: 'Commercial', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80' },
-    { title: 'Jeddah Residence', category: 'Residential', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80' },
-    { title: 'KAFD Office Complex', category: 'Commercial', image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80' },
-    { title: 'Dammam Factory', category: 'Industrial', image: 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=600&q=80' },
-    { title: 'Khobar Mall', category: 'Commercial', image: 'https://images.unsplash.com/photo-1555636222-cae831e670b3?w=600&q=80' },
-    { title: 'Al-Ula Resort', category: 'Residential', image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80' },
-  ];
+  const featuredProjects = allProjects.slice(0, 6);
 
   return (
     <div>
@@ -247,19 +241,23 @@ const Index = () => {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProjects.map((project) => (
-              <div key={project.title} className="group relative rounded-2xl overflow-hidden cursor-pointer">
+              <Link
+                key={project.slug}
+                to={`/projects/${project.slug}`}
+                className="group relative rounded-2xl overflow-hidden cursor-pointer block"
+              >
                 <img
-                  src={project.image}
-                  alt={project.title}
+                  src={project.cover}
+                  alt={project.title[isRTL ? 'ar' : 'en']}
                   className="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <span className="text-accent text-xs font-semibold uppercase tracking-wider">{project.category}</span>
-                  <h3 className="text-white font-bold text-lg mt-1">{project.title}</h3>
+                  <span className="text-accent text-xs font-semibold uppercase tracking-wider">{t(`projects.${project.category}` as any)}</span>
+                  <h3 className="text-white font-bold text-lg mt-1">{project.title[isRTL ? 'ar' : 'en']}</h3>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           <div className="text-center mt-12">
