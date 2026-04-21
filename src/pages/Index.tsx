@@ -113,14 +113,7 @@ const Index = () => {
     { icon: Shield, titleKey: 'services.maintenance.title' as const, descKey: 'services.maintenance.desc' as const },
   ];
 
-  const featuredProjects = [
-    { title: 'Riyadh Tower', category: 'Commercial', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80' },
-    { title: 'Jeddah Residence', category: 'Residential', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80' },
-    { title: 'KAFD Office Complex', category: 'Commercial', image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80' },
-    { title: 'Dammam Factory', category: 'Industrial', image: 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=600&q=80' },
-    { title: 'Khobar Mall', category: 'Commercial', image: 'https://images.unsplash.com/photo-1555636222-cae831e670b3?w=600&q=80' },
-    { title: 'Al-Ula Resort', category: 'Residential', image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80' },
-  ];
+  const featuredProjects = allProjects.slice(0, 6);
 
   return (
     <div>
