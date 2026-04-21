@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowLeft, Factory, Layers, Wrench, Shield, ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { projects as allProjects } from '@/data/projects';
 
 const heroSlides = [
   {
@@ -14,7 +15,7 @@ const heroSlides = [
     overlay: 'linear-gradient(135deg, rgba(10,20,40,0.7), rgba(20,50,80,0.4))',
   },
   {
-    image: 'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=1920&q=80',
+    image: 'https://images.unsplash.com/photo-1577415124269-fc1140a69e91?w=1920&q=80',
     overlay: 'linear-gradient(135deg, rgba(15,25,45,0.7), rgba(30,60,90,0.4))',
   },
 ];
