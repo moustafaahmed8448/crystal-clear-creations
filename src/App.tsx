@@ -13,6 +13,9 @@ import ProjectDetail from "./pages/ProjectDetail";
 import Products from "./pages/Products";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
+import Careers from "./pages/Careers";
+import Quote from "./pages/Quote";
+import Complaints from "./pages/Complaints";
 import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
 
@@ -42,6 +45,9 @@ const App = () => (
               <Route path="/products" element={<Products />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/careers" element={<Careers />} />
+              <Route path="/quote" element={<Quote />} />
+              <Route path="/complaints" element={<Complaints />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
