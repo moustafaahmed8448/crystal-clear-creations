@@ -145,7 +145,7 @@ const Index = () => {
                   <Link to="/projects">{t('hero.cta')} <Arrow className="h-4 w-4" /></Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="border-white/30 text-white bg-transparent hover:bg-white hover:text-primary rounded-full px-8">
-                  <Link to="/contact">{t('hero.secondary')}</Link>
+                  <Link to="/quote">{t('hero.secondary')}</Link>
                 </Button>
               </div>
             </div>

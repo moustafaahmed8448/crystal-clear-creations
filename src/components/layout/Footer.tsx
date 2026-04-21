@@ -11,6 +11,9 @@ const Footer = () => {
     { key: 'nav.about' as const, path: '/about' },
     { key: 'nav.services' as const, path: '/services' },
     { key: 'nav.projects' as const, path: '/projects' },
+    { key: 'quote.label' as const, path: '/quote' },
+    { key: 'careers.label' as const, path: '/careers' },
+    { key: 'complaints.title' as const, path: '/complaints' },
   ];
 
   const serviceLinks = [
