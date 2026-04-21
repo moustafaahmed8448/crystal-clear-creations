@@ -248,19 +248,23 @@ const Index = () => {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProjects.map((project) => (
-              <div key={project.title} className="group relative rounded-2xl overflow-hidden cursor-pointer">
+              <Link
+                key={project.slug}
+                to={`/projects/${project.slug}`}
+                className="group relative rounded-2xl overflow-hidden cursor-pointer block"
+              >
                 <img
-                  src={project.image}
-                  alt={project.title}
+                  src={project.cover}
+                  alt={project.title[isRTL ? 'ar' : 'en']}
                   className="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <span className="text-accent text-xs font-semibold uppercase tracking-wider">{project.category}</span>
-                  <h3 className="text-white font-bold text-lg mt-1">{project.title}</h3>
+                  <span className="text-accent text-xs font-semibold uppercase tracking-wider">{t(`projects.${project.category}` as any)}</span>
+                  <h3 className="text-white font-bold text-lg mt-1">{project.title[isRTL ? 'ar' : 'en']}</h3>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           <div className="text-center mt-12">
