@@ -180,6 +180,19 @@ export const translations = {
 
     // Marquee
     'marquee.text': 'We proudly serve major projects and contracts starting from 100 sqm and above to ensure the highest quality standards.',
+
+    // Project / Product not found extras
+    'projects.not_found_desc': 'The project you are looking for does not exist or has been moved.',
+    'products.not_found': 'Product not found',
+    'products.not_found_desc': 'The product you are looking for does not exist or has been moved.',
+    'products.back': 'Back to Products',
+    'products.description': 'Description',
+    'products.features': 'Key Features',
+    'products.applications': 'Applications',
+    'products.gallery': 'Gallery',
+    'products.inquire_title': 'Interested in this product?',
+    'products.inquire_subtitle': 'Send us your requirements and our team will reply within 24 hours.',
+    'products.related': 'Related Products',
   },
   ar: {
     // Nav
@@ -362,6 +375,19 @@ export const translations = {
 
     // Marquee
     'marquee.text': 'نعتز بتقديم خدماتنا للمشاريع الكبرى والتعاقدات التي تبدأ من 100 متر مربع فأكثر لضمان أعلى معايير الجودة.',
+
+    // Project / Product not found extras
+    'projects.not_found_desc': 'المشروع الذي تبحث عنه غير موجود أو تم نقله.',
+    'products.not_found': 'المنتج غير موجود',
+    'products.not_found_desc': 'المنتج الذي تبحث عنه غير موجود أو تم نقله.',
+    'products.back': 'العودة إلى المنتجات',
+    'products.description': 'الوصف',
+    'products.features': 'الميزات الرئيسية',
+    'products.applications': 'التطبيقات',
+    'products.gallery': 'المعرض',
+    'products.inquire_title': 'مهتم بهذا المنتج؟',
+    'products.inquire_subtitle': 'أرسل لنا متطلباتك وسيرد عليك فريقنا خلال 24 ساعة.',
+    'products.related': 'منتجات ذات صلة',
   },
 } as const;
 

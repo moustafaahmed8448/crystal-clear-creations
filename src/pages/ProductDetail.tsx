@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useLanguage } from '@/i18n/LanguageContext';
-import { getProjectBySlug, projects } from '@/data/projects';
+import { getProductBySlug, products } from '@/data/products';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -11,15 +11,12 @@ import { z } from 'zod';
 import {
   ArrowLeft,
   ArrowRight,
-  MapPin,
-  Calendar,
-  Users,
-  Maximize2,
   CheckCircle2,
   Send,
   X,
   ChevronLeft,
   ChevronRight,
+  Maximize2,
 } from 'lucide-react';
 
 const inquirySchema = z.object({
@@ -29,7 +26,7 @@ const inquirySchema = z.object({
   message: z.string().trim().min(1).max(2000),
 });
 
-const ProjectDetail = () => {
+const ProductDetail = () => {
   const { slug } = useParams();
   const { t, language, isRTL } = useLanguage();
   const { toast } = useToast();
@@ -37,15 +34,16 @@ const ProjectDetail = () => {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
 
-  const project = slug ? getProjectBySlug(slug) : undefined;
-  if (!project) {
+  const product = slug ? getProductBySlug(slug) : undefined;
+
+  if (!product) {
     return (
       <div className="pt-32 pb-24 min-h-[60vh] flex items-center">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold text-foreground mb-4">{t('projects.not_found')}</h1>
-          <p className="text-muted-foreground mb-8">{t('projects.not_found_desc')}</p>
+          <h1 className="text-4xl font-bold text-foreground mb-4">{t('products.not_found')}</h1>
+          <p className="text-muted-foreground mb-8">{t('products.not_found_desc')}</p>
           <Button asChild className="rounded-full px-8">
-            <Link to="/projects">{t('projects.back_to_projects')}</Link>
+            <Link to="/products">{t('products.back')}</Link>
           </Button>
         </div>
       </div>
@@ -57,9 +55,7 @@ const ProjectDetail = () => {
   const ChevPrev = isRTL ? ChevronRight : ChevronLeft;
   const ChevNext = isRTL ? ChevronLeft : ChevronRight;
 
-  const related = projects
-    .filter((p) => p.slug !== project.slug && p.category === project.category)
-    .slice(0, 3);
+  const related = products.filter((p) => p.slug !== product.slug).slice(0, 3);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,7 +76,7 @@ const ProjectDetail = () => {
           name,
           email,
           phone: phone || null,
-          subject: `Project Inquiry: ${project.title.en}`,
+          subject: `Product Inquiry: ${product.title.en}`,
           message,
         },
       ]);
@@ -96,83 +92,75 @@ const ProjectDetail = () => {
   const update = (key: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [key]: e.target.value }));
 
-  const meta = [
-    { icon: MapPin, label: t('projects.location'), value: project.location[language] },
-    { icon: Calendar, label: t('projects.year'), value: project.year },
-    { icon: Users, label: t('projects.client'), value: project.client[language] },
-    { icon: Maximize2, label: t('projects.area'), value: project.area },
-  ];
-
   const openLightbox = (i: number) => setLightboxIdx(i);
   const closeLightbox = () => setLightboxIdx(null);
   const nextImg = () =>
-    setLightboxIdx((i) => (i === null ? 0 : (i + 1) % project.gallery.length));
+    setLightboxIdx((i) => (i === null ? 0 : (i + 1) % product.gallery.length));
   const prevImg = () =>
     setLightboxIdx((i) =>
-      i === null ? 0 : (i - 1 + project.gallery.length) % project.gallery.length
+      i === null ? 0 : (i - 1 + product.gallery.length) % product.gallery.length
     );
 
   return (
     <div className="pt-20">
       {/* Hero */}
-      <section className="relative h-[60vh] overflow-hidden">
-        <img src={project.cover} alt={project.title[language]} className="w-full h-full object-cover" />
+      <section className="relative h-[55vh] overflow-hidden">
+        <img src={product.cover} alt={product.title[language]} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
         <div className="absolute inset-0 flex items-end">
           <div className="container mx-auto px-4 pb-12">
             <div className="mb-4">
               <Link
-                to="/projects"
+                to="/products"
                 className="inline-flex items-center gap-2 text-sm text-foreground/80 hover:text-accent"
               >
-                <Back className="h-4 w-4" /> {t('projects.back_to_projects')}
+                <Back className="h-4 w-4" /> {t('products.back')}
               </Link>
             </div>
             <span className="block text-accent text-sm font-semibold uppercase tracking-wider">
-              {t(`projects.${project.category}` as any)}
+              {t('products.label')}
             </span>
             <h1 className="text-3xl md:text-5xl font-bold text-foreground mt-2 max-w-3xl">
-              {project.title[language]}
+              {product.title[language]}
             </h1>
-            <p className="text-muted-foreground mt-3 max-w-2xl">{project.shortDesc[language]}</p>
+            <p className="text-muted-foreground mt-3 max-w-2xl">{product.shortDesc[language]}</p>
           </div>
         </div>
       </section>
 
-      {/* Meta */}
+      {/* Specs row */}
       <section className="py-10 border-b border-border">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {meta.map((m) => (
-              <div key={m.label} className="glass-card p-5 flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center shrink-0">
-                  <m.icon className="h-5 w-5 text-accent" />
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground">{m.label}</div>
-                  <div className="font-semibold text-foreground text-sm mt-0.5">{m.value}</div>
-                </div>
-              </div>
+          <div className="flex flex-wrap gap-3 justify-center">
+            {product.specs.map((spec) => (
+              <span
+                key={spec}
+                className="text-sm bg-accent/10 text-accent px-4 py-2 rounded-full font-medium"
+              >
+                {spec}
+              </span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Overview + Scope/Features */}
+      {/* Description + Features sidebar */}
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                {t('projects.overview')}
+                {t('products.description')}
               </h2>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                {project.description[language]}
+              <p className="text-muted-foreground leading-relaxed text-lg whitespace-pre-line">
+                {product.description[language]}
               </p>
 
-              <h3 className="text-xl font-bold text-foreground mt-10 mb-4">{t('projects.scope')}</h3>
-              <ul className="space-y-3">
-                {project.scope[language].map((item) => (
+              <h3 className="text-xl font-bold text-foreground mt-10 mb-4">
+                {t('products.applications')}
+              </h3>
+              <ul className="grid sm:grid-cols-2 gap-3">
+                {product.applications[language].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-accent shrink-0 mt-0.5" />
                     <span className="text-foreground">{item}</span>
@@ -180,10 +168,11 @@ const ProjectDetail = () => {
                 ))}
               </ul>
             </div>
+
             <div className="glass-card p-6 h-fit lg:sticky lg:top-24">
-              <h3 className="text-lg font-bold text-foreground mb-4">{t('projects.features')}</h3>
+              <h3 className="text-lg font-bold text-foreground mb-4">{t('products.features')}</h3>
               <ul className="space-y-3">
-                {project.features[language].map((f) => (
+                {product.features[language].map((f) => (
                   <li key={f} className="flex items-start gap-2 text-sm">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0 mt-2" />
                     <span className="text-foreground">{f}</span>
@@ -199,10 +188,10 @@ const ProjectDetail = () => {
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
-            {t('projects.gallery')}
+            {t('products.gallery')}
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {project.gallery.map((img, i) => (
+            {product.gallery.map((img, i) => (
               <button
                 key={img}
                 onClick={() => openLightbox(i)}
@@ -210,7 +199,7 @@ const ProjectDetail = () => {
               >
                 <img
                   src={img}
-                  alt={`${project.title[language]} ${i + 1}`}
+                  alt={`${product.title[language]} ${i + 1}`}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                 />
@@ -229,9 +218,9 @@ const ProjectDetail = () => {
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-10">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-                {t('projects.inquire_title')}
+                {t('products.inquire_title')}
               </h2>
-              <p className="text-muted-foreground">{t('projects.inquire_subtitle')}</p>
+              <p className="text-muted-foreground">{t('products.inquire_subtitle')}</p>
             </div>
             <form onSubmit={handleSubmit} className="glass-card p-8 space-y-5">
               <div className="grid sm:grid-cols-2 gap-5">
@@ -291,13 +280,13 @@ const ProjectDetail = () => {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
-              {t('projects.related')}
+              {t('products.related')}
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {related.map((p) => (
                 <Link
                   key={p.slug}
-                  to={`/projects/${p.slug}`}
+                  to={`/products/${p.slug}`}
                   className="group relative rounded-2xl overflow-hidden block"
                 >
                   <img
@@ -308,10 +297,10 @@ const ProjectDetail = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <span className="text-accent text-xs font-semibold uppercase tracking-wider">
-                      {t(`projects.${p.category}` as any)}
+                    <h3 className="text-white font-bold text-lg">{p.title[language]}</h3>
+                    <span className="inline-flex items-center gap-1 text-accent text-xs font-semibold mt-1">
+                      {t('products.view_details')} <Arrow className="h-3 w-3" />
                     </span>
-                    <h3 className="text-white font-bold text-lg mt-1">{p.title[language]}</h3>
                   </div>
                 </Link>
               ))}
@@ -341,7 +330,7 @@ const ProjectDetail = () => {
             <ChevPrev className="h-6 w-6" />
           </button>
           <img
-            src={project.gallery[lightboxIdx]}
+            src={product.gallery[lightboxIdx]}
             alt=""
             className="max-w-full max-h-full object-contain"
             onClick={(e) => e.stopPropagation()}
@@ -354,7 +343,7 @@ const ProjectDetail = () => {
             <ChevNext className="h-6 w-6" />
           </button>
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 text-sm">
-            {lightboxIdx + 1} / {project.gallery.length}
+            {lightboxIdx + 1} / {product.gallery.length}
           </div>
         </div>
       )}
@@ -362,4 +351,4 @@ const ProjectDetail = () => {
   );
 };
 
-export default ProjectDetail;
+export default ProductDetail;

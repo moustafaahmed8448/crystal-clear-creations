@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowLeft, Factory, Layers, Wrench, Shield, ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { projects as allProjects } from '@/data/projects';
-import MarqueeBanner from '@/components/MarqueeBanner';
+
 
 const heroSlides = [
   {
@@ -179,11 +179,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
-      {/* Marquee Banner */}
-      <div className="mt-16">
-        <MarqueeBanner />
-      </div>
 
       {/* Company Intro */}
       <section className="py-24">
