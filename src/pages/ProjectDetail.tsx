@@ -1,4 +1,4 @@
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { getProjectBySlug, projects } from '@/data/projects';
@@ -38,7 +38,19 @@ const ProjectDetail = () => {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
 
   const project = slug ? getProjectBySlug(slug) : undefined;
-  if (!project) return <Navigate to="/projects" replace />;
+  if (!project) {
+    return (
+      <div className="pt-32 pb-24 min-h-[60vh] flex items-center">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-4xl font-bold text-foreground mb-4">{t('projects.not_found')}</h1>
+          <p className="text-muted-foreground mb-8">{t('projects.not_found_desc')}</p>
+          <Button asChild className="rounded-full px-8">
+            <Link to="/projects">{t('projects.back_to_projects')}</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   const Arrow = isRTL ? ArrowLeft : ArrowRight;
   const Back = isRTL ? ArrowRight : ArrowLeft;
