@@ -359,6 +359,9 @@ export const translations = {
     'footer.contact': 'معلومات الاتصال',
     'footer.rights': 'جميع الحقوق محفوظة.',
     'footer.company': 'رواق للزجاج',
+
+    // Marquee
+    'marquee.text': 'نعتز بتقديم خدماتنا للمشاريع الكبرى والتعاقدات التي تبدأ من 100 متر مربع فأكثر لضمان أعلى معايير الجودة.',
   },
 } as const;
 
