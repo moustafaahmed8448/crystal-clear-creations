@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import Header from './Header';
 import Footer from './Footer';
+import MarqueeBanner from '@/components/MarqueeBanner';
 import { MessageCircle } from 'lucide-react';
 
 const Layout = ({ children }: { children: ReactNode }) => {
@@ -11,6 +12,10 @@ const Layout = ({ children }: { children: ReactNode }) => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">{children}</main>
+
+      {/* Global marquee — visible on every page above the footer */}
+      <MarqueeBanner />
+
       <Footer />
 
       {/* WhatsApp Floating Button */}
