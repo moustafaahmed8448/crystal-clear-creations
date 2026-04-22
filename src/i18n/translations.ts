@@ -177,6 +177,9 @@ export const translations = {
     'footer.contact': 'Contact Info',
     'footer.rights': 'All rights reserved.',
     'footer.company': 'Rwaq Glass',
+
+    // Marquee
+    'marquee.text': 'We proudly serve major projects and contracts starting from 100 sqm and above to ensure the highest quality standards.',
   },
   ar: {
     // Nav
