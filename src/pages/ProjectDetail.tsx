@@ -108,13 +108,15 @@ const ProjectDetail = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
         <div className="absolute inset-0 flex items-end">
           <div className="container mx-auto px-4 pb-12">
-            <Link
-              to="/projects"
-              className="inline-flex items-center gap-2 text-sm text-foreground/80 hover:text-accent mb-4"
-            >
-              <Back className="h-4 w-4" /> {t('projects.back_to_projects')}
-            </Link>
-            <span className="text-accent text-sm font-semibold uppercase tracking-wider">
+            <div className="mb-4">
+              <Link
+                to="/projects"
+                className="inline-flex items-center gap-2 text-sm text-foreground/80 hover:text-accent"
+              >
+                <Back className="h-4 w-4" /> {t('projects.back_to_projects')}
+              </Link>
+            </div>
+            <span className="block text-accent text-sm font-semibold uppercase tracking-wider">
               {t(`projects.${project.category}` as any)}
             </span>
             <h1 className="text-3xl md:text-5xl font-bold text-foreground mt-2 max-w-3xl">
